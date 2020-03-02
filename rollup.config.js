@@ -1,8 +1,7 @@
 import ts from "@wessberg/rollup-plugin-ts";
 import path from "path";
-import commonjs from "rollup-plugin-commonjs";
 import nodeResolve from "rollup-plugin-node-resolve";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 const extensions = [".ts", ".tsx"];
 
 function isBareModuleId(id) {
@@ -27,7 +26,6 @@ export default function configureRollup() {
 				ts({
 					transpiler: "babel",
 				}),
-				commonjs(),
 			],
 		},
 		{
@@ -39,8 +37,7 @@ export default function configureRollup() {
 				ts({
 					transpiler: "babel",
 				}),
-				commonjs(),
-				uglify(),
+				terser(),
 			],
 		},
 		// ESM:
@@ -53,7 +50,6 @@ export default function configureRollup() {
 				ts({
 					transpiler: "babel",
 				}),
-				commonjs(),
 			],
 		},
 	];

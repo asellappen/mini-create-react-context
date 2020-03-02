@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import gud from 'gud';
 import warning from 'tiny-warning';
 
 const MAX_SIGNED_31_BIT_INT = 1073741823;
+
+const commonjsGlobal: any =
+    typeof globalThis !== 'undefined' // 'global proper'
+    ? globalThis
+    : typeof window !== 'undefined' 
+        ? window // Browser
+        : typeof global !== 'undefined'
+            ? global // node.js
+            : {}
+
+
+function getUniqueId() {
+    const key = '__global_unique_id__';
+    return commonjsGlobal[key] = (commonjsGlobal[key] || 0) + 1;
+}
 
 // Inlined Object.is polyfill.
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
@@ -67,7 +81,7 @@ function onlyChild(children: any): any {
 }
 
 export default function createReactContext<T>(defaultValue: T, calculateChangedBits?: (a: T, b: T) => number): Context<T> {
-	const contextProp = '__create-react-context-' + gud() + '__';
+	const contextProp = '__create-react-context-' + getUniqueId() + '__';
 
 	class Provider extends Component<ProviderProps<T>> {
 		emitter = createEventEmitter(this.props.value);
