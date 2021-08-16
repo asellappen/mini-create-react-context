@@ -1,0 +1,10 @@
+arch:
+  - amd64
+  - ppc64le
+language: nodejs
+install: 
+  - apt-get install -y nodejs:12
+script:
+  - npm install
+  - npm install typescript
+  - npm test
