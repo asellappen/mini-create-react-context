@@ -5,6 +5,7 @@ arch:
 node_js:
   - '14'
   - '12'
+  - '11'
 install:
   - npm install
   - npm test
